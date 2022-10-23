@@ -5,6 +5,10 @@ const UserSchema= new mongoose.Schema({
         type: String,
         required: true
     },
+    email:{
+        type: String,
+        required: true
+    },
     displayName:{
         type: String,
         required: true
@@ -19,6 +23,18 @@ const UserSchema= new mongoose.Schema({
     },
     image:{
         type: String
+    },
+    subAdminRightsOf:[{
+        type:mongoose.Schema.ObjectId,
+        ref:'Department',
+    }],
+    superAdminRightsOf:[{
+        type:mongoose.Schema.ObjectId,
+        ref:'Department',
+    }],
+    isGodLevelAdmin:{
+        type: Boolean,
+        default: false
     },
     createdAt:{
          type: Date,

@@ -9,12 +9,16 @@ module.exports=function(passport){
         callbackURL: '/auth/google/callback'
     },
     async (accessToken, refreshToken, profile, done)=>{
+        let isGodLevelAdmin=false;
+        if(profile.emails[0].value=='195001@nith.ac.in')isGodLevelAdmin=true;
         const newUser={
             googleId: profile.id,
+            email: profile.emails[0].value,
             displayName: profile.displayName,
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
-            image: profile.photos[0].value
+            image: profile.photos[0].value,
+            isGodLevelAdmin : isGodLevelAdmin
         }
 
         try{

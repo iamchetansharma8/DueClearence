@@ -8,9 +8,11 @@ router.get('/', ensureGuest, (req,res)=>{
 });
 
 router.get('/home',ensureAuth, (req,res)=>{
-    console.log(req.user)
+    // console.log(req)
     res.send('Home')
 })
 
 router.use('/auth', require('./auth.js'))
+router.use('/department', require('./department'))
+
 module.exports=router;
