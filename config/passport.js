@@ -20,7 +20,7 @@ module.exports=function(passport){
             image: profile.photos[0].value,
             isGodLevelAdmin : isGodLevelAdmin
         }
-
+        
         try{
             let user=await User.findOne({googleId: profile.id})
             if(user){

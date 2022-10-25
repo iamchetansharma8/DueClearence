@@ -8,7 +8,6 @@ router.get('/', ensureGuest, (req,res)=>{
 });
 
 router.get('/home',ensureAuth, (req,res)=>{
-    // console.log(req)
     res.send('Home')
 })
 
