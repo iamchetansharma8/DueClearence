@@ -63,10 +63,19 @@ module.exports.changeSuperAdmin = async function(req,res){
                 message : 'User whom you want to add as new super-admin not found'
             })
         }
+        if(JSON.stringify(department.superAdmin)==JSON.stringify(newSuperAdmin.id)){
+            return res.status(400).json({
+                message : 'User whom you want to make as new super-admin is already super-admin'
+            })
+        }
         let oldSuperAdmin=await User.findByIdAndUpdate(department.superAdmin,
             {$pull:{superAdminRightsOf:department._id}});
+        oldSuperAdmin.save();
+        
         department.superAdmin=newSuperAdmin._id;
         department.save();
+        await newSuperAdmin.superAdminRightsOf.push(department._id)
+        newSuperAdmin.save();
         return res.status(200).json({
             message : 'Super-admin changed'
         });

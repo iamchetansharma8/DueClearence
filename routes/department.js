@@ -8,6 +8,11 @@ const passport=require('passport')
 router.get('/create_page',ensureAuth,(req,res)=>{
     res.send("<form action='/department/create' method='POST'><label for='name'>name:</label><br><input type='text' id='name' name='name'><br><label for='superAdminEmail'>superAdminEmail:</label><br><input type='email' id='superAdminEmail' name='superAdminEmail'><button type='submit'>Create</button></form>")
 })
+
+router.get('/page_change_super_admin',ensureAuth,(req,res)=>{
+    res.send("<form action='/department/change_super_admin' method='POST'><label for='name'>name:</label><br><input type='text' id='name' name='name'><br><label for='newSuperAdminEmail'>newSuperAdminEmail:</label><br><input type='email' id='newSuperAdminEmail' name='newSuperAdminEmail'><button type='submit'>Change Super Admin</button></form>")
+})
+
 router.get('/page_add_sub_admin',ensureAuth,(req,res)=>{
     res.send("<form action='/department/add_sub_admin' method='POST'><label for='name'>name:</label><br><input type='text' id='name' name='name'><br><label for='newAdminEmail'>newAdminEmail:</label><br><input type='email' id='newAdminEmail' name='newAdminEmail'><button type='submit'>Add</button></form>")
 })
