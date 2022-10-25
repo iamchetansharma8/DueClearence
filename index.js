@@ -6,6 +6,7 @@ const morgan = require("morgan")
 const passport= require("passport")
 const session=require("express-session")
 const MongoStore=require('connect-mongo')
+const bodyParser = require('body-parser');
 
 // Load config
 dotenv.config({path: './config/config.env'})
@@ -34,7 +35,8 @@ app.use(session({
 // passport middleware
 app.use(passport.initialize())
 app.use(passport.session())
-
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 // Routes
 app.use('/', require('./routes/index.js'));
 

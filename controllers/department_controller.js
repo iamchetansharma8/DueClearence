@@ -86,7 +86,7 @@ module.exports.addSubAdmin = async function(req,res){
                 message : 'Department not found'
             })
         }
-        if(department.superAdmin!=req.user._id){
+        if(JSON.stringify(department.superAdmin)!=JSON.stringify(req.user.id)){
             return res.status(401).json({
                 message : 'Unauthorised access'
             })
@@ -97,6 +97,17 @@ module.exports.addSubAdmin = async function(req,res){
         if(!newAdmin){
             return res.status(400).json({
                 message : 'User whom you want to add admin not found'
+            })
+        }
+        let isSubAdmin=false;
+        for(subAdmin of department.subAdmins){
+            if(JSON.stringify(subAdmin)==JSON.stringify(newAdmin.id)){
+                isSubAdmin=true;
+            }
+        }
+        if(isSubAdmin){
+            return res.status(400).json({
+                message : 'User whom you want to add is already a sub-admin'
             })
         }
         await department.subAdmins.push(newAdmin._id);
@@ -122,12 +133,12 @@ module.exports.revokeSubAdminRights = async function(req,res){
                 message : 'Department not found'
             })
         }
-        if(department.superAdmin!=req.user._id){
+        if(JSON.stringify(department.superAdmin)!=JSON.stringify(req.user.id)){
             return res.status(401).json({
                 message : 'Unauthorised access'
             })
         }
-        let oldSubAdmin=User.findOne({
+        let oldSubAdmin=await User.findOne({
             email: req.body.oldSubAdminEmail
         })
         if(!oldSubAdmin){
@@ -136,8 +147,8 @@ module.exports.revokeSubAdminRights = async function(req,res){
             })
         }
         let isSubAdmin=false;
-        for(subAdmin in department.subAdmins){
-            if(subAdmin==oldSubAdmin._id){
+        for(subAdmin of department.subAdmins){
+            if(JSON.stringify(subAdmin)==JSON.stringify(oldSubAdmin.id)){
                 isSubAdmin=true;
             }
         }
