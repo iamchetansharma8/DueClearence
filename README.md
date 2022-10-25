@@ -20,10 +20,14 @@ git clone "https://github.com/iamchetansharma8/dueclearence.git"
   2. Department functionality added : create new department, change super admin of existing department, add sub admin to a given department, revoke subadmin rights of a subadmin
   
   ## - Create new department
+    Route : /department/create
   Can be done by institute level admin only, need to supply name (of department) and superAdminEmail (email of super admin of this new department) attached with req.body in the concerned POST request
   ## - Change super-admin of existing department
+    Route : /department/change_super_admin
   Can be done by institute level admin only, need to supply name (of department) and newSuperAdminEmail (email of the new super admin of concerned department) attached with req.body in the concerned POST request
   ## - Add sub-admin to a given department
+    Route : /department/add_sub_admin
   Can be done by super-admin of concerned department only, need to supply name (of department) and newAdminEmail (email of the new sub admin to be added) attached with req.body in the concerned POST request
   ## - Revoke sub-admin rights of a user from a given department
+    Route : /department/revoke_sub_admin
   Can be done by super-admin of concerned department only, need to supply name (of department) and oldSubAdminEmail (email of the old sub admin to be removed) attached with req.body in the concerned POST request
