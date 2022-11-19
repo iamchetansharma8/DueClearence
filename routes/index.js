@@ -13,5 +13,5 @@ router.get('/home',ensureAuth, (req,res)=>{
 
 router.use('/auth', require('./auth.js'))
 router.use('/department', require('./department'))
-
+router.use('/superadmin', require('./superadmin'))
 module.exports=router;
