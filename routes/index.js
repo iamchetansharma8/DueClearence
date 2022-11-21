@@ -14,4 +14,5 @@ router.get('/home',ensureAuth, (req,res)=>{
 router.use('/auth', require('./auth.js'))
 router.use('/department', require('./department'))
 router.use('/superadmin', require('./superadmin'))
+router.use('/upload-data' , require('./upload-data.js')); //  Added routes for upload-data side 
 module.exports=router;
