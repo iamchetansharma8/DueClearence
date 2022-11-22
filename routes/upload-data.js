@@ -2,8 +2,12 @@ const express = require('express');
 
 const router  = express.Router();
 const {updateData , upload} = require('../middleware/updateData');
+const check_department = require('../middleware/check_department');
 // Route to upload file on the cloud 
-router.post('/student-upload',upload.single('student-record'),updateData ,async (req , res , next)=>{
+router.post('/student-upload',upload.single('studentRecord'),
+check_department , 
+updateData 
+,async (req , res , next)=>{
     const url = req.protocol  + '://' + req.get('host');
     console.log(url);
     // return ;

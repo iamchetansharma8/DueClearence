@@ -1,18 +1,18 @@
 const multer = require('multer');
 
 const reader = require("xlsx");
+
 const Student = require('../models/student.model');
 const User=require('../models/users');
 const Department=require('../models/department')
 
-const path_to_store = './store/file2.xls'; // CHECK
 const DIR  = './store';
 const storage = multer.diskStorage({
     destination : (req , file , cb)=>{
         cb(null, DIR);
     } , 
     filename : (req , file , cb)=>{
-        const filename = 'file2.xls';
+        const filename = 'reserved_name.xlsx';
         cb(null , filename);
     }
 })
@@ -38,9 +38,10 @@ const upload = multer({
 // }
 
 const updateData = async (req , res , next)=>{
-    const file = reader.readFile(path_to_store);
-    console.log(file);
-
+    const file = reader.readFile(`./store/${req.body.department}.xlsx`);
+    console.log("moving");
+    res.send("done"); return ;
+    // res.status(201).json({"msg"  : "nikal le"});
     const data = []
 
     const sheets = file.SheetNames; 
