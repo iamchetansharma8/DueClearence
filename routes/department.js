@@ -23,6 +23,12 @@ router.get('/list_sub' ,ensureAuth , departmentController.listSub);
 // sub-admin list for a given department
 router.get('/list_sub_admins/:name' ,ensureAuth , departmentController.listSubAdmins);
 
+// delete department
+router.get('/page_delete_department',ensureAuth,(req,res)=>{
+    res.send("<form action='/department/delete' method='POST'><label for='name'>name:</label><br><input type='text' id='name' name='name'><br><button type='submit'>Delete</button></form>")
+})
+
+router.post('/delete',ensureAuth,departmentController.deleteDepartment)
 
 router.post('/create' ,ensureAuth , departmentController.create);
 router.post('/change_super_admin' ,ensureAuth , departmentController.changeSuperAdmin);

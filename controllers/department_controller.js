@@ -149,3 +149,32 @@ module.exports.listSubAdmins= async function(req,res){
         return res.send('Error in listing departments');
     }
 }
+
+// delete department
+module.exports.deleteDepartment = async function(req,res){
+    try{
+        if(!req.user.isGodLevelAdmin){
+            return res.status(401).json({
+                message : 'Unauthorised access'
+            })
+        }
+        let department=await Department.findOne({name : req.body.name});
+        if(!department){
+            return res.status(400).json({
+                message : 'Department does not exist'
+            })
+        }
+        let super_admin_id=department.superAdmin;
+        let super_admin=await User.findByIdAndUpdate(super_admin_id,{$pull:{superAdminRightsOf:department.id}})
+        for(let sub_admin_id of department.subAdmins){
+            let sub_admin=await User.findByIdAndUpdate(sub_admin_id,{$pull:{subAdminRightsOf:department.id}})
+        }
+        department.remove();
+        return res.status(200).json({
+            message : 'Department deleted',
+        });
+    }catch(error){
+        console.log('Error in deleting department',error);
+        return res.send('Error in deleting department');
+    }
+}
