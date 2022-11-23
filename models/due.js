@@ -1,19 +1,18 @@
 const mongoose=require('mongoose')
 
 const DueSchema= new mongoose.Schema({
+    rollNumber:{
+        type : Number,
+        required : true
+    },
     department:{
-        type:mongoose.Schema.ObjectId,
+        type : mongoose.Schema.ObjectId,
         ref:'Department',
         required: true
     },
-    userConcerned:{
-        type:mongoose.Schema.ObjectId,
-        ref:'User',
-        required: true
-    },
     hasDue:{
-        type:Boolean,
-        required: true
+        type : Boolean,
+        default : true,
     },
     createdAt:{
          type: Date,
