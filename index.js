@@ -7,10 +7,15 @@ const passport= require("passport")
 const session=require("express-session")
 const MongoStore=require('connect-mongo')
 const bodyParser = require('body-parser');
-
+const cors = require('cors');
 // Load config
 dotenv.config({path: './config/config.env'})
-
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: "GET,POST,PUT,DELETE",
+  credentials: true,
+  "Access-Control-Allow-Credentials": true
+}));
 // passport config
 require('./config/passport')(passport)
 
