@@ -8,7 +8,7 @@ module.exports.listStudents=async function(req,res){
             name : req.body.name
         })
         if(!department){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Department not found'
             })
         }
@@ -23,7 +23,7 @@ module.exports.listStudents=async function(req,res){
             }
         }
         if(unauth){
-            return res.status(401).json({
+            return res.status(200).json({
                 message : 'Unauthorised access'
             })
         }
@@ -50,7 +50,7 @@ module.exports.setDueFalse=async function(req,res){
             name : req.body.name
         })
         if(!department){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Department not found'
             })
         }
@@ -65,18 +65,18 @@ module.exports.setDueFalse=async function(req,res){
             }
         }
         if(unauth){
-            return res.status(401).json({
+            return res.status(200).json({
                 message : 'Unauthorised access'
             })
         }
         let due=await Due.findOne({"department":department._id,"rollNumber":req.body.rollNumber});
         if(!due){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Record not found'
             })
         }
         if(due.hasDue==false){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Due was already set to false'
             })
         }
@@ -100,7 +100,7 @@ module.exports.setDueTrue=async function(req,res){
             name : req.body.name
         })
         if(!department){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Department not found'
             })
         }
@@ -115,18 +115,18 @@ module.exports.setDueTrue=async function(req,res){
             }
         }
         if(unauth){
-            return res.status(401).json({
+            return res.status(200).json({
                 message : 'Unauthorised access'
             })
         }
         let due=await Due.findOne({"department":department._id,"rollNumber":req.body.rollNumber});
         if(!due){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Record not found'
             })
         }
         if(due.hasDue==true){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Due was already set to true'
             })
         }

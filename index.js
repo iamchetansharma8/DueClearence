@@ -8,6 +8,7 @@ const session=require("express-session")
 const MongoStore=require('connect-mongo')
 const bodyParser = require('body-parser');
 var path = require('path');
+const cors = require('cors')
 
 // Load config
 dotenv.config({path: './config/config.env'})
@@ -23,6 +24,13 @@ const app=express()
 if(process.env.NODE_ENV==='development'){
     app.use(morgan('dev'))
 }
+// CORS Policy
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: "GET,POST,PUT,DELETE",
+  credentials: true,
+  "Access-Control-Allow-Credentials": true
+}));
 
 // sessions
 app.use(session({
