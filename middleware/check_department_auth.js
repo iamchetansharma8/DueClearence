@@ -7,7 +7,7 @@ const checkDepartmentAndAuth = async function (req , res , next){
         let dept=req.body.department
         let department=await Department.findOne({name:dept});
         if(!department){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Department name not found'
             })
         }
@@ -22,7 +22,7 @@ const checkDepartmentAndAuth = async function (req , res , next){
             }
         }
         if(unauth){
-            return res.status(401).json({
+            return res.status(200).json({
                 message : 'Unauthorised access'
             })
         }

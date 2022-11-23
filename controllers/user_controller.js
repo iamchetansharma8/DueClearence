@@ -1,5 +1,5 @@
 const User=require('../models/users');
-
+const CLIENT_URL = "http://localhost:3000/"
 // sign in and create a session
 module.exports.createSession=async function(req,res){
     // return res.status(200).json({
@@ -14,5 +14,5 @@ module.exports.destroySession=async function(req,res,next){
     await req.logout((error)=>{
         if (error) {return next(error)}
     });
-    return res.redirect('/');
+    return res.redirect(CLIENT_URL);
 }
