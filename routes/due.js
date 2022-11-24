@@ -16,11 +16,8 @@ router.get('/page_upload_data',ensureAuth,(req,res)=>{
 router.post('/uploadfile',ensureAuth,upload.single('studentRecord'), checkDepartmentAndAuth,updateData);
 
 
-router.get('/page_show_students',ensureAuth,(req,res)=>{
-    res.send("<form action='/due/show_students' method='POST'><label for='name'>name:</label><br><input type='text' id='name' name='name'><br><button type='submit'>Show Students</button></form>")
-})
 
-router.post('/show_students',ensureAuth,dueController.listStudents)
+router.get('/show_students/:name',ensureAuth,dueController.listStudents)
 
 router.get('/page_set_due_false',ensureAuth,(req,res)=>{
     res.send("<form action='/due/set_due_false' method='POST'><label for='rollNumber'>rollNumber:</label><br><input type='text' id='rollNumber' name='rollNumber'><br><label for='name'>name:</label><br><input type='text' id='name' name='name'><br><button type='submit'>Set False</button></form>")
