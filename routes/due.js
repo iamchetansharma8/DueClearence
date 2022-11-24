@@ -33,6 +33,11 @@ router.get('/page_set_due_true',ensureAuth,(req,res)=>{
     res.send("<form action='/due/set_due_true' method='POST'><label for='rollNumber'>rollNumber:</label><br><input type='text' id='rollNumber' name='rollNumber'><br><label for='name'>name:</label><br><input type='text' id='name' name='name'><br><button type='submit'>Set True</button></form>")
 })
 
+router.get('/page_add_single_student',ensureAuth,(req,res)=>{
+    res.send("<form action='/due/add_single_student' method='POST'><label for='rollNumber'>rollNumber:</label><br><input type='text' id='rollNumber' name='rollNumber'><br><label for='department'>department:</label><br><input type='text' id='department' name='department'><br><label for='hasDue'>hasDue:</label><br><input type='text' id='hasDue' name='hasDue'><br><button type='submit'>Add Student</button></form>")
+})
+router.post('/add_single_student',ensureAuth,dueController.addStudent);
+
 router.post('/set_due_true',ensureAuth,dueController.setDueTrue)
 
 
