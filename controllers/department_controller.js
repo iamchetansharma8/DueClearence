@@ -1,5 +1,6 @@
 const User=require('../models/users');
 const Department=require('../models/department')
+const Due=require('../models/due')
 
 module.exports.create = async function(req,res){
     try{
@@ -133,20 +134,37 @@ module.exports.listSub= async function(req,res){
 // get sub-admin list for department
 module.exports.listSubAdmins= async function(req,res){
     try{
-        let list=await Department.findOne({name : req.params.name}).populate('subAdmins','email').select({ name: 1, _id: 0 });
-        if(!list){
+        let department=await Department.findOne({name : req.params.name}).populate('superAdmin','_id').populate('subAdmins','email displayName').select({ name: 1, _id: 0 });
+        if(!department){
             return res.status(400).json({
                 message : 'Department does not exist'
             })
         }
+        let unauth=true
+        if(JSON.stringify(department.superAdmin._id)==JSON.stringify(req.user.id)){
+            unauth=false
+        }
+        for(i of department.subAdmins){
+            if(!unauth)break
+            console.log(JSON.stringify(i._id))
+            console.log(JSON.stringify(req.user.id))
+            if(JSON.stringify(req.user.id)==JSON.stringify(i._id)){
+                unauth=false
+            }
+        }
+        if(unauth){
+            return res.status(401).json({
+                message : 'Unauthorised access'
+            })
+        }
         let newlist=[];
-        for(let i of list.subAdmins){
-            newlist.push(i.email)
+        for(let i of department.subAdmins){
+            newlist.push({"email":i.email,"name":i.displayName})
         }
         return res.status(200).json({
             message : 'Success',
             list : newlist,
-            department : list.name
+            department : department.name
         });
     }catch(error){
         console.log('Error in listing departments',error);
@@ -173,6 +191,7 @@ module.exports.deleteDepartment = async function(req,res){
         for(let sub_admin_id of department.subAdmins){
             let sub_admin=await User.findByIdAndUpdate(sub_admin_id,{$pull:{subAdminRightsOf:department.id}})
         }
+        await Due.deleteMany({department:department._id});
         department.remove();
         return res.status(200).json({
             message : 'Department deleted',
