@@ -52,18 +52,30 @@ const updateData = async function(req , res , next){
         let department=await Department.findOne({name:req.body.department});
         console.log(department._id)
         let arr=[]
-        for(rollNumber of data){
-            let key = Object.keys(rollNumber)[0];
-            obj={"rollNumber":rollNumber[key],department:department._id}
-            arr.push(obj)
-            console.log(rollNumber[key])
+        for(i of data){
+            let keys = Object.keys(i);
+            console.log(keys)
+            if(i[keys[1]]<=0){
+                return res.status(400).json({
+                    message : 'amount can not be less than or equal to 0'
+                })
+            }
+            obj={"rollNumber":i[keys[0]],department:department._id,amount:i[keys[1]]}
+            arr.push(obj);
         }
-        console.log(arr)
+        console.log(arr);
+        // let due=await Due.insertMany(arr);
         await Due.deleteMany({department:department._id})
         let due=await Due.insertMany(arr);
         return res.status(200).json({
-            message : 'file uploaded'
+            message : 'Success'
         });
+        // for(rollNumber of data){
+        //     let key = Object.keys(rollNumber)[0];
+        //     obj={"rollNumber":rollNumber[key],department:department._id}
+        //     arr.push(obj)
+        //     console.log(rollNumber[key])
+        // }
     }catch(error){
         console.log('Error in uploading to db',error);
         return res.send('Error in uploading to db');

@@ -30,7 +30,7 @@ module.exports.listStudents=async function(req,res){
         let due=await Due.find({department:department._id})
         let list=[]
         for(i of due){
-            let obj={"Roll Number":i['rollNumber'],"hasDue":i['hasDue']}
+            let obj={"Roll Number":i['rollNumber'],"hasDue":i['hasDue'],"Amount":i["amount"]}
             list.push(obj)
         }
         return res.status(200).json({
@@ -81,7 +81,8 @@ module.exports.setDueFalse=async function(req,res){
             })
         }
         due.hasDue=false;
-        due.save();
+        due.amount=0;
+        await due.save();
         console.log(due)
         return res.status(200).json({
             message : 'Success'
@@ -94,7 +95,7 @@ module.exports.setDueFalse=async function(req,res){
 }
 
 
-module.exports.setDueTrue=async function(req,res){
+module.exports.setDueAmount=async function(req,res){
     try{
         let department=await Department.findOne({
             name : req.body.name
@@ -125,17 +126,16 @@ module.exports.setDueTrue=async function(req,res){
                 message : 'Record not found'
             })
         }
-        if(due.hasDue==true){
+        if(!req.body.amount){
             return res.status(400).json({
-                message : 'Due was already set to true'
+                message : 'Due amount must be supplied'
             })
         }
+        due.amount= req.body.amount
         due.hasDue=true;
-        due.save();
-        console.log(due)
+        await due.save();
         return res.status(200).json({
             message : 'Success'
-            
         });
     }catch(error){
         console.log('Error in setting due to true',error);
@@ -180,8 +180,19 @@ module.exports.addStudent=async function(req,res){
         if(has_due==""){
             has_due=true
         }
+        let amount;
+        if(has_due==="true"){
+            if(req.body.amount<=0){
+                return res.status(401).json({
+                    message : 'Due amount must be entered and should be greater than 0'
+                })
+            }
+            amount=req.body.amount
+        }else{
+            amount=0;
+        }
         let due=await Due.create({rollNumber:req.body.rollNumber, 
-            department:department._id, hasDue:has_due});
+            department:department._id, hasDue:has_due, amount:amount});
         return res.status(200).json({
             message : 'Success'
         });
