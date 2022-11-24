@@ -2,7 +2,8 @@ const express= require('express');
 const passport = require('passport');
 const router=express.Router()
 const userController=require('../controllers/user_controller.js')
-const CLIENT_URL = "http://localhost:3000/";
+const CLIENT_URL = "http://localhost:3000"
+
 router.get("/failed", (req, res) => {
 	res.status(401).json({
 		error: true,

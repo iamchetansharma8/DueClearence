@@ -19,16 +19,18 @@ require('./config/passport')(passport)
 connectDB()
 
 const app=express()
+
+// LOGGING
+if(process.env.NODE_ENV==='development'){
+    app.use(morgan('dev'))
+}
+// CORS Policy
 app.use(cors({
   origin: "http://localhost:3000",
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
   "Access-Control-Allow-Credentials": true
 }));
-// LOGGING
-if(process.env.NODE_ENV==='development'){
-    app.use(morgan('dev'))
-}
 
 // sessions
 app.use(session({

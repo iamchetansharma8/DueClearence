@@ -7,12 +7,12 @@ module.exports.addSubAdmin = async function(req,res){
             name : req.body.name
         })
         if(!department){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Department not found'
             })
         }
         if(JSON.stringify(department.superAdmin)!=JSON.stringify(req.user.id)){
-            return res.status(401).json({
+            return res.status(200).json({
                 message : 'Unauthorised access'
             })
         }
@@ -20,7 +20,7 @@ module.exports.addSubAdmin = async function(req,res){
             email: req.body.newAdminEmail
         })
         if(!newAdmin){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'User whom you want to add admin not found'
             })
         }
@@ -31,7 +31,7 @@ module.exports.addSubAdmin = async function(req,res){
             }
         }
         if(isSubAdmin){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'User whom you want to add is already a sub-admin'
             })
         }
@@ -54,12 +54,12 @@ module.exports.revokeSubAdminRights = async function(req,res){
             name : req.body.name
         })
         if(!department){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'Department not found'
             })
         }
         if(JSON.stringify(department.superAdmin)!=JSON.stringify(req.user.id)){
-            return res.status(401).json({
+            return res.status(200).json({
                 message : 'Unauthorised access'
             })
         }
@@ -67,7 +67,7 @@ module.exports.revokeSubAdminRights = async function(req,res){
             email: req.body.oldSubAdminEmail
         })
         if(!oldSubAdmin){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'User whom you want to remove not found'
             })
         }
@@ -78,7 +78,7 @@ module.exports.revokeSubAdminRights = async function(req,res){
             }
         }
         if(!isSubAdmin){
-            return res.status(400).json({
+            return res.status(200).json({
                 message : 'User whom you want to remove is not sub-admin'
             })
         }
