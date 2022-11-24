@@ -5,7 +5,7 @@ const Due=require('../models/due')
 module.exports.listStudents=async function(req,res){
     try{
         let department=await Department.findOne({
-            name : req.body.name
+            name : req.params.name
         })
         if(!department){
             return res.status(200).json({
