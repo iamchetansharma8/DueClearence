@@ -133,16 +133,20 @@ module.exports.listSub= async function(req,res){
 // get sub-admin list for department
 module.exports.listSubAdmins= async function(req,res){
     try{
-        console.log(req.params.name);
-        let list=await Department.findOne({name : req.params.name}).populate('subAdmins','displayName').select({ name: 1, _id: 0 });
+        let list=await Department.findOne({name : req.params.name}).populate('subAdmins','email').select({ name: 1, _id: 0 });
         if(!list){
             return res.status(400).json({
                 message : 'Department does not exist'
             })
         }
+        let newlist=[];
+        for(let i of list.subAdmins){
+            newlist.push(i.email)
+        }
         return res.status(200).json({
             message : 'Success',
-            list : list
+            list : newlist,
+            department : list.name
         });
     }catch(error){
         console.log('Error in listing departments',error);
