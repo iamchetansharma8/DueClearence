@@ -9,7 +9,6 @@ const MongoStore=require('connect-mongo')
 const bodyParser = require('body-parser');
 const cors = require('cors');
 var path = require('path');
-const cors = require('cors')
 
 // Load config
 dotenv.config({path: './config/config.env'})
