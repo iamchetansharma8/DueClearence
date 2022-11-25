@@ -37,5 +37,9 @@ router.post('/add_single_student',ensureAuth,dueController.addStudent);
 
 router.post('/set_due_amount',ensureAuth,dueController.setDueAmount)
 
+router.get('/page_remove_single_student',ensureAuth,(req,res)=>{
+    res.send("<form action='/due/remove_single_student' method='POST'><label for='rollNumber'>rollNumber:</label><br><input type='text' id='rollNumber' name='rollNumber'><br><label for='department'>department:</label><br><input type='text' id='department' name='department'><br><button type='submit'>Remove Student</button></form>")
+})
+router.post('/remove_single_student',ensureAuth,dueController.removeSingleStudent);
 
 module.exports=router;
