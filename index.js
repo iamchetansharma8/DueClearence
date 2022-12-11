@@ -11,7 +11,7 @@ const cors = require('cors');
 var path = require('path');
 
 // Load config
-dotenv.config({path: '/config.env'})
+dotenv.config({path: 'config.env'})
 
 // passport config
 require('./config/passport')(passport)
