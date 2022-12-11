@@ -2,7 +2,10 @@ const express= require('express');
 const passport = require('passport');
 const router=express.Router()
 const userController=require('../controllers/user_controller.js')
-const CLIENT_URL = "http://localhost:3000/"
+let CLIENT_URL = "http://localhost:3000/"
+if(process.env.NODE_ENV==='production'){
+  CLIENT_URL="http://mp-backend-gh8g.onrender.com"
+}
 
 router.get("/failed", (req, res) => {
 	res.status(401).json({

@@ -11,7 +11,7 @@ module.exports=function(passport){
     async (accessToken, refreshToken, profile, done)=>{
         let isGodLevelAdmin=false;
         console.log("called");
-        if(profile.emails[0].value=='20bcs014@nith.ac.in')isGodLevelAdmin=true;
+        if(profile.emails[0].value=='195001@nith.ac.in')isGodLevelAdmin=true;
         const newUser={
             googleId: profile.id,
             email: profile.emails[0].value,
