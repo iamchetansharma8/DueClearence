@@ -25,8 +25,12 @@ if(process.env.NODE_ENV==='development'){
     app.use(morgan('dev'))
 }
 // CORS Policy
+let orig="http://localhost:3000";
+if(process.env.NODE_ENV==='production'){
+  orig="http://mp-backend-gh8g.onrender.com"
+}
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: orig,
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
   "Access-Control-Allow-Credentials": true
