@@ -4,7 +4,7 @@ const router=express.Router()
 const userController=require('../controllers/user_controller.js')
 let CLIENT_URL = "http://localhost:3000/"
 if(process.env.NODE_ENV==='production'){
-  CLIENT_URL="http://mp-backend-gh8g.onrender.com"
+  CLIENT_URL="https://nithdue.netlify.app/"
 }
 
 router.get("/failed", (req, res) => {
