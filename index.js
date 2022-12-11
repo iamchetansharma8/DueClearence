@@ -27,7 +27,7 @@ if(process.env.NODE_ENV==='development'){
 // CORS Policy
 let orig="http://localhost:3000";
 if(process.env.NODE_ENV==='production'){
-  orig="http://mp-backend-gh8g.onrender.com"
+  orig="https://nithdue.netlify.app/"
 }
 app.use(cors({
   origin: orig,
